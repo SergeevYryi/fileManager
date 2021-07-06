@@ -12,6 +12,10 @@ public class Main {
                 fileManager.listOfFiles(false);
             } else if (command.equals(Commands.LIST_OF_FILES_WITH_SIZE)) {
                 fileManager.listOfFiles(true);
+            } else if (command.equals(Commands.COPY_FILE)) {
+                String sourceFileName = tokens[1];
+                String destFileName = tokens[2];
+                fileManager.copyFile(sourceFileName, destFileName);
             }
             input = scanner.nextLine();
         }

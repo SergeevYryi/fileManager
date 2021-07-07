@@ -1,6 +1,8 @@
 import org.apache.commons.io.FileUtils;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 
 public class FileManager {
@@ -44,6 +46,40 @@ public class FileManager {
             FileUtils.copyFile(source, dest);
         } catch (IOException e) {
             System.out.println("Произошла ошибка");
+        }
+    }
+
+    public void createFile(String fileName) {
+        File file = new File(currentFolder + "\\" + fileName);
+        try {
+            file.createNewFile();
+        } catch (IOException e) {
+            System.out.println("Что-то пошло не так...");
+        }
+    }
+
+    public void fileContent(String fileName) {
+        File file = new File (currentFolder + "\\" + fileName);
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line = reader.readLine();
+            while (line != null) {
+                System.out.println(line);
+                line = reader.readLine();
+        }
+        } catch (IOException e) {
+            System.out.println("Что-то пошло не так...");
+        }
+    }
+
+    public void changeDirectory(String folderName) {
+        if (folderName.equals("/")) {
+            this.currentFolder = this.root;
+        } else if(folderName.equals("..")) {
+            int positionOfStartLastFolder = this.currentFolder.lastIndexOf("\\");
+            this.currentFolder = this.currentFolder.substring(0, positionOfStartLastFolder);
+        } else {
+            this.currentFolder = this.currentFolder + "\\" + folderName;
         }
     }
 }
